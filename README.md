@@ -13,7 +13,7 @@ ReadmeForge is a full-stack project for generating polished `README.md` content 
 - Live README markdown preview
 - Skill and social link selection
 - GitHub and stats widget toggles
-- Download generated `README.md`
+- Copy and download generated `README.md`
 - Frontend and backend can run in parallel via workspace scripts
 
 ## Quick Start
