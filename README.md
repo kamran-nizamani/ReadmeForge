@@ -118,6 +118,8 @@ npm test
 - The backend serves static assets from `public/` and exposes API routes under `/api/`.
 - The frontend is a standalone React app built with Vite.
 
+> Auto commit 50: small documentation update.
+
 ## License
 
 This repository is currently private and does not include a license file.
