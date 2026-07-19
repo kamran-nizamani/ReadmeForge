@@ -40,9 +40,10 @@ const generateSceneSnapshot = async (sceneType, config) => {
     const page = await browser.newPage();
     const baseUrl = process.env.FRONTEND_SNAPSHOT_BASE_URL || 'http://localhost:5173';
     const route = stableRoutes[sceneType];
+    const configParam = encodeURIComponent(JSON.stringify(config || {}));
     await page.setViewport({ width: 1200, height: 700, deviceScaleFactor: 2 });
-    await page.goto(`${baseUrl}${route}`, { waitUntil: 'networkidle' });
-    await page.waitForTimeout(1200);
+    await page.goto(`${baseUrl}${route}?config=${configParam}`, { waitUntil: 'networkidle0' });
+    await new Promise((resolve) => setTimeout(resolve, 1200));
     await page.screenshot({ path: filepath, fullPage: false });
   } finally {
     await browser.close();
