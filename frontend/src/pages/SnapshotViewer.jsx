@@ -8,7 +8,7 @@ const parseConfig = (search) => {
   try {
     const raw = params.get('config');
     if (!raw) return {};
-    return JSON.parse(decodeURIComponent(raw));
+    return JSON.parse(raw);
   } catch (error) {
     return {};
   }
