@@ -69,6 +69,79 @@ const fetchGithubUserData = async (username) => {
   }
 };
 
+const CONTRIBUTION_CALENDAR_QUERY = `
+  query ($username: String!) {
+    user(login: $username) {
+      contributionsCollection {
+        contributionCalendar {
+          totalContributions
+          weeks {
+            contributionDays {
+              date
+              contributionCount
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+const fetchContributionCalendar = async (username) => {
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) {
+    const err = new Error('GITHUB_TOKEN is required to fetch contribution data.');
+    err.status = 500;
+    throw err;
+  }
+
+  try {
+    const response = await axios.post(
+      'https://api.github.com/graphql',
+      { query: CONTRIBUTION_CALENDAR_QUERY, variables: { username } },
+      { headers: { Authorization: `Bearer ${token}` } },
+    );
+
+    if (response.data.errors?.length) {
+      const err = new Error(response.data.errors[0].message || 'GitHub user not found.');
+      err.status = 404;
+      throw err;
+    }
+
+    const calendar = response.data.data?.user?.contributionsCollection?.contributionCalendar;
+    if (!calendar) {
+      const err = new Error('GitHub user not found.');
+      err.status = 404;
+      throw err;
+    }
+
+    const days = calendar.weeks.flatMap((week) =>
+      week.contributionDays.map((day) => ({
+        date: day.date,
+        commits: day.contributionCount,
+      })),
+    );
+
+    return {
+      totalContributions: calendar.totalContributions,
+      days,
+    };
+  } catch (error) {
+    if (error.status) throw error;
+
+    if (error.response && error.response.status === 401) {
+      const err = new Error('GitHub token is invalid or expired.');
+      err.status = 401;
+      throw err;
+    }
+
+    const err = new Error('Unable to fetch GitHub contribution data.');
+    err.status = 500;
+    throw err;
+  }
+};
+
 module.exports = {
   fetchGithubUserData,
+  fetchContributionCalendar,
 };

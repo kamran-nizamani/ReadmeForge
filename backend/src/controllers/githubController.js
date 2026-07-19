@@ -1,4 +1,4 @@
-const { fetchGithubUserData } = require('../services/githubService');
+const { fetchGithubUserData, fetchContributionCalendar } = require('../services/githubService');
 
 const getGithubProfile = async (req, res, next) => {
   try {
@@ -10,6 +10,17 @@ const getGithubProfile = async (req, res, next) => {
   }
 };
 
+const getContributionCalendar = async (req, res, next) => {
+  try {
+    const { username } = req.params;
+    const calendar = await fetchContributionCalendar(username);
+    res.json(calendar);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getGithubProfile,
+  getContributionCalendar,
 };
