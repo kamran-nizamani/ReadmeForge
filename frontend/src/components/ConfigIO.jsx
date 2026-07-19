@@ -24,17 +24,17 @@ const ConfigIO = ({ config, onSave, onRestore, onReset }) => {
   };
 
   return (
-    <div className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-xl shadow-slate-950/20 backdrop-blur-xl">
+    <div className="panel">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-white">Configuration</h2>
+          <h2 className="text-xl font-semibold text-white">💾 Configuration</h2>
           <p className="mt-2 text-sm text-slate-400">Save and restore your README builder state locally.</p>
         </div>
         <div className="flex flex-wrap gap-3">
           <button
             type="button"
             onClick={downloadConfig}
-            className="rounded-2xl bg-brand px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500"
+            className="rounded-2xl bg-gradient-to-r from-brand-500 to-fuchsia-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-brand-500/20 transition hover:opacity-90"
           >
             Download config
           </button>
@@ -48,7 +48,7 @@ const ConfigIO = ({ config, onSave, onRestore, onReset }) => {
         </div>
       </div>
 
-      <div className="mt-6 rounded-3xl border border-slate-800 bg-slate-950/90 p-4">
+      <div className="panel-inset mt-6 p-4">
         <label className="flex flex-col gap-2 text-sm text-slate-300">
           <span>Upload config</span>
           <input type="file" accept="application/json" onChange={handleFileChange} className="text-slate-100" />

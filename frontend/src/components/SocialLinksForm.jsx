@@ -1,4 +1,5 @@
 import { socialNetworks } from '../data/socialNetworks';
+import ToggleSwitch from './ToggleSwitch';
 
 const SocialLinksForm = ({ socialItems, onUpdate }) => {
   const updateItem = (id, updatedFields) => {
@@ -6,10 +7,10 @@ const SocialLinksForm = ({ socialItems, onUpdate }) => {
   };
 
   return (
-    <div className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-xl shadow-slate-950/20 backdrop-blur-xl">
+    <div className="panel">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-white">Social Links</h2>
+          <h2 className="text-xl font-semibold text-white">🔗 Social Links</h2>
           <p className="mt-2 text-sm text-slate-400">Choose which network links and badges to include in your README.</p>
         </div>
         <span className="rounded-full bg-slate-800 px-3 py-1 text-xs uppercase tracking-[0.18em] text-slate-400">
@@ -26,23 +27,19 @@ const SocialLinksForm = ({ socialItems, onUpdate }) => {
           };
 
           return (
-            <label key={network.id} className="space-y-2 rounded-3xl border border-slate-800 bg-slate-950/90 p-4">
-              <div className="flex items-center justify-between gap-3">
-                <span className="font-medium text-slate-100">{network.label}</span>
-                <input
-                  type="checkbox"
-                  checked={item.checked}
-                  onChange={(e) => updateItem(network.id, { checked: e.target.checked })}
-                  className="h-4 w-4 accent-brand"
-                />
-              </div>
+            <div key={network.id} className="panel-inset space-y-3 p-4">
+              <ToggleSwitch
+                checked={item.checked}
+                onChange={(value) => updateItem(network.id, { checked: value })}
+                label={network.label}
+              />
               <input
                 value={item.value}
                 onChange={(e) => updateItem(network.id, { value: e.target.value })}
-                className="w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 outline-none focus:border-brand"
+                className="field"
                 placeholder={network.placeholder}
               />
-            </label>
+            </div>
           );
         })}
       </div>
