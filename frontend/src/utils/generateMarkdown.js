@@ -55,6 +55,9 @@ export const buildAddOnBlocks = (username, addOns) => {
   if (addOns.blogPosts) {
     blocks.push('> Latest blog posts are shown dynamically with a GitHub Actions workflow.');
   }
+  if (addOns.contributionGraph3D && addOns.contributionSnapshotUrl) {
+    blocks.push(`### 3D Contribution Graph\n\n![3D Contribution Graph](${addOns.contributionSnapshotUrl})`);
+  }
 
   return blocks.join('\n\n');
 };
